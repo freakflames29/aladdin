@@ -1,5 +1,5 @@
 # python bot
-
+import time
 from time import sleep
 import pywhatkit as pw
 import wikipedia as wiki
@@ -53,6 +53,8 @@ class Aladdin:
     def tell_me_a_joke(self):
         self.buffer()
         print("\033[1;36mAladdin:\033[1;39m", joke.joke(),"😂️")
+        sleep(3)
+        # ps.playsound("/home/sourav/Documents/aladdin/blob/hahaha.mp3")
 
     def reply(self):
         if "hello" in self.user_input or "hi" in self.user_input:
