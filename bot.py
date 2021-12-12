@@ -8,7 +8,9 @@ import playsound as ps
 from program_open import open
 from pywhatkit.core.exceptions import InternetException
 import re
-import  joke
+import joke
+import weather
+
 
 class Aladdin:
 
@@ -16,8 +18,9 @@ class Aladdin:
         self.user_input = ""
         self.songPlayed = False
 
-    def checkurl(self,string):
+    def checkurl(self, string):
         pass
+
     # buffer
     def buffer(self):
 
@@ -52,9 +55,18 @@ class Aladdin:
 
     def tell_me_a_joke(self):
         self.buffer()
-        print("\033[1;36mAladdin:\033[1;39m", joke.joke(),"😂️")
+        print("\033[1;36mAladdin:\033[1;39m", joke.joke(), "😂️")
         sleep(3)
-        # ps.playsound("/home/sourav/Documents/aladdin/blob/hahaha.mp3")
+        ps.playsound("/home/sourav/Documents/aladdin/blob/hahaha.mp3")
+
+    def weather(self):
+        self.buffer()
+        info=weather.get_weather()
+        print("\033[1;36mAladdin:\033[1;39m", "The weather is")
+        print("Temperature:", info['Temperature'])
+        print("Humidity:", info['Humidity'])
+        print("Weather:", info['Weather'])
+        print("Feels like:", info['Feels like'])
 
     def reply(self):
         if "hello" in self.user_input or "hi" in self.user_input:
@@ -73,8 +85,8 @@ class Aladdin:
             return "My name is Aladdin.I am your friend"
 
         elif "my name is" in self.user_input:
-            name=self.user_input.replace("my name is","")
-            return "Nice to meet you!"+name
+            name = self.user_input.replace("my name is", "")
+            return "Nice to meet you!" + name
 
         elif "play the song" in self.user_input or "play song" in self.user_input:
 
@@ -113,14 +125,19 @@ class Aladdin:
                 return "I am sorry I did not play anything"
         elif "open" in self.user_input:
             # isurl=self.checkurl(self.user_input) # TODO: check if url
-            cmd=self.user_input.replace("open","")
+            cmd = self.user_input.replace("open", "")
             open(cmd)
             return ""
         elif "tell me a joke" in self.user_input:
             self.tell_me_a_joke()
             return ""
+
+        elif "how is the weather" in self.user_input or "weather" in self.user_input or "weather today" in self.user_input or "how is the day" in self.user_input or "forecast" in self.user_input:
+            self.weather()
+            return ""
+
         else:
-            return "Sorry, I don't understand"
+            return "Sorry, I didn't get that"
 
     # user input
     def capt(self):
