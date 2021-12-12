@@ -10,6 +10,7 @@ from pywhatkit.core.exceptions import InternetException
 import re
 import joke
 import weather
+import recipie
 
 
 class Aladdin:
@@ -61,12 +62,22 @@ class Aladdin:
 
     def weather(self):
         self.buffer()
-        info=weather.get_weather()
+        info = weather.get_weather()
         print("\033[1;36mAladdin:\033[1;39m", "The weather is")
         print("Temperature:", info['Temperature'])
         print("Humidity:", info['Humidity'])
         print("Weather:", info['Weather'])
         print("Feels like:", info['Feels like'])
+
+    def show_me(self, query, choice):
+        self.buffer()
+        print("\033[1;36mAladdin:\033[1;39m", "Showing you", query)
+        if choice == 1:
+            recipie.youtube(query)
+        elif choice == 2:
+            recipie.google(query)
+        elif choice == 3:
+            recipie.wikipedia(query)
 
     def reply(self):
         if "hello" in self.user_input or "hi" in self.user_input:
@@ -98,7 +109,7 @@ class Aladdin:
             self.playit(song)
             return ""
 
-        elif "play" in self.user_input:
+        elif "play" in self.user_input and "how to" not in self.user_input:
             song = self.user_input.replace("play ", "")
             self.playit(song)
             return ""
@@ -136,6 +147,23 @@ class Aladdin:
             self.weather()
             return ""
 
+        elif "show me" in self.user_input or "how to" in self.user_input:
+            if "show me" in self.user_input:
+                query = self.user_input.replace("show me", "")
+            elif "how to" in self.user_input:
+                query = self.user_input
+            print("\033[1;36mAladdin:\033[1;39m",
+                  "Where do you want to see? Press 1 for youtube , 2 for google, 3 for wikipedia")
+            choice = int(input("Enter your choice: "))
+            if choice == 1:
+                self.show_me(query, 1)
+            elif choice == 2:
+                self.show_me(query, 2)
+            elif choice == 3:
+                self.show_me(query, 3)
+            else:
+                return "Invalid choice"
+            return ""
         else:
             return "Sorry, I didn't get that"
 
