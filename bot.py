@@ -11,7 +11,7 @@ import re
 import joke
 import weather
 import recipie
-
+from  spotify import spotify
 
 class Aladdin:
 
@@ -79,12 +79,22 @@ class Aladdin:
         elif choice == 3:
             recipie.wikipedia(query)
 
+    #spotify
+    def search_on_spotify(self, query):
+        self.buffer()
+        print("\033[1;36mAladdin:\033[1;39m", "Searching on spotify")
+        spotify(query)
     def reply(self):
         if "hello" in self.user_input or "hi" in self.user_input:
             return "Hello! how are you today?"
 
         elif "how are you" in self.user_input:
             return "I am fine, thanks for asking"
+        #play on spotify
+        elif "play" in self.user_input and "on spotify" in self.user_input:
+            play_rm=self.user_input.replace("play","")
+            query=play_rm.replace("on spotify","")
+            self.search_on_spotify(query)
 
         elif "i am good" in self.user_input:
             return "I am glad to hear that you are good in this hard time !"
